@@ -124,12 +124,15 @@ class Enhancer():
             original_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2LAB)            
             L,A,B=cv2.split(original_image)
             L = L.astype(np.uint8)
-            
-            CLAHE=cv2.createCLAHE(self.cliplimit,tilesize)
-            Enh_L=CLAHE.apply(L)
-            
+            if tilesize[0] > 0 and tilesize[1] > 0:
+                CLAHE=cv2.createCLAHE(self.cliplimit,tilesize)
+                Enh_L=CLAHE.apply(L)
+                
+            else:
+                Enh_L=np.zeros((self.image.shape[0],self.image.shape[1]), dtype=np.uint8)
+                A = np.zeros((self.image.shape[0],self.image.shape[1]), dtype=np.uint8)
+                B = np.zeros((self.image.shape[0],self.image.shape[1]), dtype=np.uint8)
             Enh_LAB=cv2.merge((Enh_L,A,B))
-
             return cv2.cvtColor(Enh_LAB,cv2.COLOR_LAB2BGR)
         except Exception as e:
             logger.error("Unexpected error occured while apply enhancement to the image: %s", e)

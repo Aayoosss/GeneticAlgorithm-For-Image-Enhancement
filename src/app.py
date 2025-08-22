@@ -29,26 +29,25 @@ logger.addHandler(fileHandler)
 def read_image(image_path: str) -> np.array:
     try:
         img = cv2.imread(image_path)
-        logger.log("Image loaded successfully")
+        # logger.log("Image loaded successfully")
         return img
-    except FileNotFoundError as e:
-        logger.log("File Not Found Error: %s", e)
     except Exception as e:
-        logger.log("Unexpected error occured while loading the image: %s", e)        
+        logger.error("Unexpected error occured while loading the image: %s", e)        
 
 
 def main():
     try:
-        image_path = "data/image75.jpeg"
+        image_path = r"data/image75.jpeg"
         img = read_image(image_path)
-        enhancer = Enhancer(img, cliplimit = 2.0, tilesize = (8,8))
-        logger.log("Enhancement Initiated...........")
+        enhancer = Enhancer(img, cliplimit = 2.0)
+        # logger.log("Enhancement Initiated...........")
         enhanced_img = enhancer.RunGA(40, 100)
-        logger.log("Enhancement Completed !")
+        # logger.log("Enhancement Completed !")
         enhancer.compare_images(enhanced_img)
         
     except Exception as e:
-        logger.log("Unexpected error occurred while enhancing the image: %s", e)
+        logger.error("Unexpected error occurred while enhancing the image: %s", e)
+        raise
 
 if __name__ == "__main__":
     main()
