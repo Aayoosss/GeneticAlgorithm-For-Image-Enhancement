@@ -119,6 +119,24 @@ def main():
         layout="wide"
     )
     
+    st.markdown("""
+    <style>
+    .stApp {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+    :root {
+        --primary-color: #1f77b4;
+        --background-color: #ffffff;
+        --secondary-background-color: #f0f2f6;
+        --text-color: #262730;
+    }
+    .stMarkdown, .stText, p, h1, h2, h3, h4, h5, h6 {
+        color: #000000 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
     st.title("🔬 X-Ray Image Enhancer")
     st.markdown("---")
     
