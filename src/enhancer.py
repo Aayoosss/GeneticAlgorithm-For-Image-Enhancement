@@ -286,7 +286,7 @@ class Enhancer():
             self.enhanced=self.applyclahe(population=population,population_size=population_size)
             logger.info("Best chromosome found: %s", population[population_size-1]) 
 
-            return Best_fitness, eachgentable
+            return Best_fitness, eachgentable, population[population_size-1]
         except Exception as e:
             logger.error("Unexpected error occured while running genetic algorithm: %s", e)
             raise    
@@ -320,7 +320,7 @@ class Enhancer():
         """Code to run GA"""
         try:
             logger
-            self.Best_fitness, self.eachgentable= self.GA_for_CLAHE(population_size, generations)
+            self.Best_fitness, self.eachgentable, self.best_chromosome= self.GA_for_CLAHE(population_size, generations)
             return self.enhanced
         except Exception as e:
             logger.error("Unexpected error occured while inititating genetic algorithm: %s", e)
@@ -349,7 +349,15 @@ class Enhancer():
             plt.savefig("result/Comparison.jpg")
         except Exception as e:
             logger.log("Unexpected error occured while saving the comparison image: %s", e)
-            raise        
+            raise
+        
+    
+    def get_best_chromosome(self):
+        m,n = self.divide_chromosome(self.best_chromosome)
+        return (m,n)
+    
+    def get_gentable(self):
+        return self.eachgentable        
         
         
         

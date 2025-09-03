@@ -29,7 +29,7 @@ logger.addHandler(fileHandler)
 def read_image(image_path: str) -> np.array:
     try:
         img = cv2.imread(image_path)
-        # logger.log("Image loaded successfully")
+        logger.info("Image loaded successfully")
         return img
     except Exception as e:
         logger.error("Unexpected error occured while loading the image: %s", e)        
@@ -40,9 +40,12 @@ def main():
         image_path = r"data/image75.jpeg"
         img = read_image(image_path)
         enhancer = Enhancer(img, cliplimit = 2.0)
-        # logger.log("Enhancement Initiated...........")
-        enhanced_img = enhancer.RunGA(40, 100)
-        # logger.log("Enhancement Completed !")
+        logger.info("Enhancement Initiated...........")
+        enhanced_img = enhancer.RunGA(20, 50)
+        logger.info("Enhancement Completed !")
+        gentable = enhancer.get_gentable()
+        grid_size = enhancer.get_best_chromosome()
+        # print(gentable)
         enhancer.compare_images(enhanced_img)
         
     except Exception as e:
@@ -51,9 +54,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# enhancer.compare_images(enhanced_img)
-# cv2.imshow("Enhanced Image", enhanced_img)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
